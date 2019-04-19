@@ -8,6 +8,12 @@ Regex Replacer has the following requirements:
 
 * JRE 1.8 or greater.
 
+## Build
+Run the following command in the project root directory:
+```sh
+mvn clean install
+```
+
 ## Installation
 
 Download the appropriate release zip file and extract it's content to somewhere. Then add this folder to the PATH environment variable.
