@@ -16,8 +16,10 @@ Download the appropriate release zip file and extract it's content to somewhere.
 
 Open a terminal and type:
 ```sh
-regex-replacer
+regex-replacer -d "C:\temp files\xml" -f *.xml
 ```
+
+This will replace all occurrences in every xml files in the current directory.
 
 You can specify the following flags:
 
