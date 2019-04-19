@@ -19,8 +19,14 @@ public class Arguments {
     @Parameter(names = {"-d", "--directory"}, description = "Directory.")
     private String directory;
 
-    @Parameter(names = {"-f", "--file"}, description = "File matcher.")
+    @Parameter(names = {"-f", "--file"}, description = "File matcher.", required = true)
     private String fileMatcher;
+
+    @Parameter(names = {"-r", "--regex"}, description = "Text matcher.", required = true)
+    private String textMatcher;
+
+    @Parameter(names = {"-t", "--text"}, description = "Text replacement.", required = true)
+    private String textReplacement;
 
     public boolean isHelp() {
         return help;
@@ -36,5 +42,13 @@ public class Arguments {
 
     public String getFileMatcher() {
         return fileMatcher;
+    }
+
+    public String getTextMatcher() {
+        return textMatcher;
+    }
+
+    public String getTextReplacement() {
+        return textReplacement;
     }
 }
