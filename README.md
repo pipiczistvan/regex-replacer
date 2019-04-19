@@ -14,10 +14,6 @@ Run the following command in the project root directory:
 mvn clean install
 ```
 
-## Installation
-
-Download the appropriate release zip file and extract it's content to somewhere. Then add this folder to the PATH environment variable.
-
 ## Usage
 
 Open a terminal and type:
@@ -29,11 +25,11 @@ This will replace all occurrences in every xml files in the specified directory.
 
 You can specify the following flags:
 
-Short form | Long form | Description | Required
---- | --- | ---
--h | --help                 | *Display help*        | NO
--v | --version              | *Display version*     | NO
--d | --directory            | *Directory*           | NO
--f | --file                 | *File matcher*        | YES
--p | --pattern              | *Text pattern*        | YES
--r | --replacement          | *Text replacement*    | YES
+|Short form | Long form      | Description        | Required    |
+|---------- | -------------- | ------------------ | ------------|
+|-h         | --help         | *Display help*     | NO          |
+|-v         | --version      | *Display version*  | NO          |
+|-d         | --directory    | *Directory*        | NO          |
+|-f         | --file         | *File matcher*     | YES         |
+|-p         | --pattern      | *Text pattern*     | YES         |
+|-r         | --replacement  | *Text replacement* | YES         |

@@ -6,7 +6,7 @@
 
     <groupId>com.github.pipiczistvan</groupId>
     <artifactId>regex-replacer</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <properties>
         <jcommander.version>1.72</jcommander.version>
