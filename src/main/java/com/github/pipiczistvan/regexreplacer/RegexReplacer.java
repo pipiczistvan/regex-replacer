@@ -2,20 +2,25 @@ package com.github.pipiczistvan.regexreplacer;
 
 import com.github.pipiczistvan.regexreplacer.argument.ArgumentParser;
 import com.github.pipiczistvan.regexreplacer.argument.Arguments;
+import com.github.pipiczistvan.regexreplacer.eval.CommandEvaluator;
 import com.github.pipiczistvan.regexreplacer.util.FileUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegexReplacer {
 
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final ArgumentParser argumentParser = new ArgumentParser();
+    private final CommandEvaluator commandEvaluator = new CommandEvaluator(Pattern.compile("\\$\\{(.+)\\}|\\$"));
 
     public void startProcessing(final String[] args) {
         // Argument parsing
@@ -27,7 +32,9 @@ public class RegexReplacer {
         // File scanning
         final List<File> matchingFiles = FileUtils.findFiles(arguments.getDirectory(), arguments.getFileMatcher());
 
-        matchingFiles.forEach(file -> replaceTextInFile(file, arguments.getTextMatcher(), arguments.getTextReplacement()));
+        // Text replacement
+        final String evaluatedReplacement = commandEvaluator.evaluateCommandsInText(arguments.getTextReplacement());
+        matchingFiles.forEach(file -> replaceTextInFile(file, arguments.getTextMatcher(), evaluatedReplacement));
     }
 
     private Arguments parseArguments(final String[] args) {
@@ -40,19 +47,20 @@ public class RegexReplacer {
     }
 
     private void replaceTextInFile(final File file, final String textMatcher, final String replacement) {
-        String content;
+        PrintWriter writer = null;
         try {
-            content = new String(Files.readAllBytes(file.toPath()));
-            content = content.replaceAll(textMatcher, replacement);
-        } catch (IOException e) {
-            logger.warning("Could not replace matching text in file: " + file.getName());
-            return;
-        }
-        try (PrintWriter writer = new PrintWriter(file)) {
-            writer.println(content);
+            final String content = new String(Files.readAllBytes(file.toPath()));
+            final String processedContent = content.replaceAll(textMatcher, replacement);
+
+            writer = new PrintWriter(file);
+            writer.println(processedContent);
             logger.info("Replaced all matching text in file: " + file.getName());
         } catch (IOException e) {
-            logger.warning("Could not save file: " + file.getName());
+            logger.warning("Could not replace matching text in file: " + file.getName());
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
         }
     }
 }

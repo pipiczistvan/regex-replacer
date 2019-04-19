@@ -16,7 +16,7 @@ Download the appropriate release zip file and extract it's content to somewhere.
 
 Open a terminal and type:
 ```sh
-regex-replacer -d "c:\Users\me\.m2\settings - Copy" -f "*.xml" -r "(<password>).*(<\/password>)" -t "<password>my password</password>"
+regex-replacer -d "c:\Users\me\.m2\settings - Copy" -f *.xml -r "(<password>).*(<\/password>)" -t "<password>${cmd /c mvn --encrypt-password password}</password>"
 ```
 
 This will replace all occurrences in every xml files in the specified directory.
