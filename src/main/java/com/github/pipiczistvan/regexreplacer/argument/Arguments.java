@@ -3,7 +3,6 @@ package com.github.pipiczistvan.regexreplacer.argument;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.Strings;
-import com.sun.deploy.util.StringUtils;
 
 @Parameters(separators = "=")
 public class Arguments {
@@ -22,10 +21,10 @@ public class Arguments {
     @Parameter(names = {"-f", "--file"}, description = "File matcher.", required = true)
     private String fileMatcher;
 
-    @Parameter(names = {"-r", "--regex"}, description = "Text matcher.", required = true)
-    private String textMatcher;
+    @Parameter(names = {"-p", "--pattern"}, description = "Text pattern.", required = true)
+    private String textPattern;
 
-    @Parameter(names = {"-t", "--text"}, description = "Text replacement.", required = true)
+    @Parameter(names = {"-r", "--replacement"}, description = "Text replacement.", required = true)
     private String textReplacement;
 
     public boolean isHelp() {
@@ -44,8 +43,8 @@ public class Arguments {
         return fileMatcher;
     }
 
-    public String getTextMatcher() {
-        return textMatcher;
+    public String getTextPattern() {
+        return textPattern;
     }
 
     public String getTextReplacement() {

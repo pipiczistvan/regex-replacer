@@ -29,12 +29,19 @@ public class RegexReplacer {
             return;
         }
 
+        logger.info("Looking for matching files in [" + arguments.getDirectory() + "] directory...");
+
         // File scanning
         final List<File> matchingFiles = FileUtils.findFiles(arguments.getDirectory(), arguments.getFileMatcher());
 
+        logger.info("Evaluating [" + arguments.getTextReplacement() + "] text replacement...");
+
         // Text replacement
         final String evaluatedReplacement = commandEvaluator.evaluateCommandsInText(arguments.getTextReplacement());
-        matchingFiles.forEach(file -> replaceTextInFile(file, arguments.getTextMatcher(), evaluatedReplacement));
+        logger.info("Replacing pattern [" + arguments.getTextPattern() + "] with [" + evaluatedReplacement + "] in " + matchingFiles.size() + " files...");
+        matchingFiles.forEach(file -> replaceTextInFile(file, arguments.getTextPattern(), evaluatedReplacement));
+
+        logger.info("Text replacement finished.");
     }
 
     private Arguments parseArguments(final String[] args) {
@@ -46,11 +53,11 @@ public class RegexReplacer {
         return arguments;
     }
 
-    private void replaceTextInFile(final File file, final String textMatcher, final String replacement) {
+    private void replaceTextInFile(final File file, final String textPattern, final String replacement) {
         PrintWriter writer = null;
         try {
             final String content = new String(Files.readAllBytes(file.toPath()));
-            final String processedContent = content.replaceAll(textMatcher, replacement);
+            final String processedContent = content.replaceAll(textPattern, replacement);
 
             writer = new PrintWriter(file);
             writer.println(processedContent);
